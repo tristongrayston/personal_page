@@ -1,0 +1,114 @@
+---
+/**
+ * Centered image carousel. Uses plain <img> for remote URLs; switch to <Image /> with remotePatterns for optimization.
+ */
+export interface GallerySlide {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+interface Props {
+  /** Unique on the page (used in DOM ids). */
+  id: string;
+  slides: GallerySlide[];
+}
+
+const { id, slides } = Astro.props;
+
+if (!slides?.length) {
+  throw new Error('PhotoGallery requires at least one slide.');
+}
+
+const safe = id.replace(/[^a-zA-Z0-9_-]/g, '-');
+const domId = `pg-${safe}`;
+const first = slides[0]!;
+---
+
+<div
+  id={domId}
+  class="photo-gallery mx-auto my-10 max-w-2xl outline-none"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="Image gallery"
+  tabindex="0"
+>
+  <div class="relative flex items-center justify-center px-12 sm:px-14">
+    <button
+      type="button"
+      id={`${domId}-prev`}
+      class="absolute left-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/25 text-heading backdrop-blur-sm transition-colors duration-200 hover:border-highlight/40 hover:bg-black/40 focus-visible:ring-2 focus-visible:ring-highlight focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+      aria-controls={`${domId}-img`}
+      aria-label="Previous image"
+    >
+      <span class="sr-only">Previous</span>
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M15 6l-6 6 6 6"></path>
+      </svg>
+    </button>
+
+    <figure class="mx-auto w-full max-w-xl text-center">
+      <img
+        id={`${domId}-img`}
+        class="mx-auto max-h-[min(70vh,520px)] w-full rounded-sm object-contain"
+        src={first.src}
+        alt={first.alt}
+        loading="lazy"
+        decoding="async"
+      />
+      <figcaption
+        id={`${domId}-caption`}
+        class="mt-3 min-h-[1.35rem] text-sm leading-relaxed text-muted"
+        aria-live="polite"
+      >
+        {first.caption ?? ''}
+      </figcaption>
+    </figure>
+
+    <button
+      type="button"
+      id={`${domId}-next`}
+      class="absolute right-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/25 text-heading backdrop-blur-sm transition-colors duration-200 hover:border-highlight/40 hover:bg-black/40 focus-visible:ring-2 focus-visible:ring-highlight focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+      aria-controls={`${domId}-img`}
+      aria-label="Next image"
+    >
+      <span class="sr-only">Next</span>
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M9 6l6 6-6 6"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script define:vars={{ slides, domId }}>
+  const root = document.getElementById(domId);
+  const img = document.getElementById(`${domId}-img`);
+  const cap = document.getElementById(`${domId}-caption`);
+  const prev = document.getElementById(`${domId}-prev`);
+  const next = document.getElementById(`${domId}-next`);
+  if (!root || !img || !cap || !prev || !next || !slides?.length) return;
+
+  let index = 0;
+
+  function show(i) {
+    index = (i + slides.length) % slides.length;
+    const s = slides[index];
+    img.src = s.src;
+    img.alt = s.alt;
+    cap.textContent = s.caption ?? '';
+  }
+
+  prev.addEventListener('click', () => show(index - 1));
+  next.addEventListener('click', () => show(index + 1));
+
+  root.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      show(index - 1);
+    }
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      show(index + 1);
+    }
+  });
+</script>

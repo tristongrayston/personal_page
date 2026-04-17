@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { featured } from '../data/featured';
+import { withBase } from '../utils/urls';
+
+const bio =
+  'I build internal tools and data pipelines, mostly on cloud infra. I like small teams, readable code, and deploys that are easy to roll back. This site is a quiet index of what I have written and shipped.';
+---
+
+<BaseLayout
+  title="Jordan Lee"
+  description="Portfolio and writing by Jordan Lee — tools, data, and static sites."
+>
+  <div class="space-y-14 sm:space-y-16">
+    <div class="space-y-6">
+      <h1 class="text-4xl font-semibold tracking-tight text-heading sm:text-5xl">
+        Jordan Lee
+      </h1>
+      <p class="max-w-prose leading-7 text-muted">
+        {bio}
+      </p>
+    </div>
+
+    <section aria-label="Selected writing and projects" class="space-y-8">
+      <ul class="space-y-8">
+        {
+          featured.map((item) => (
+            <li class="leading-6">
+              {item.external ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group block transition-colors duration-200"
+                >
+                  <span class="font-medium text-highlight transition-colors group-hover:text-[#b2e6d2]">
+                    {item.title}
+                  </span>
+                  <span class="mt-1 block text-sm text-muted group-hover:text-muted/90">
+                    {item.description}
+                  </span>
+                </a>
+              ) : (
+                <a href={withBase(item.href)} class="group block transition-colors duration-200">
+                  <span class="font-medium text-highlight transition-colors group-hover:text-[#b2e6d2]">
+                    {item.title}
+                  </span>
+                  <span class="mt-1 block text-sm text-muted group-hover:text-muted/90">
+                    {item.description}
+                  </span>
+                </a>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <footer class="border-t border-white/10 pt-10">
+      <p class="text-xs uppercase tracking-widest text-muted/80">Elsewhere</p>
+      <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
+        <li>
+          <a
+            href="https://github.com/"
+            class="transition-colors duration-200 hover:text-highlight"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.linkedin.com/in/"
+            class="transition-colors duration-200 hover:text-highlight"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn
+          </a>
+        </li>
+        <li>
+          <a href="mailto:hello@example.com" class="transition-colors duration-200 hover:text-highlight">
+            hello@example.com
+          </a>
+        </li>
+      </ul>
+    </footer>
+  </div>
+</BaseLayout>

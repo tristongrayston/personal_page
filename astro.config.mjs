@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 
 // GitHub Pages: set `site` to your published origin.
@@ -8,6 +9,7 @@ export default defineConfig({
   site: 'https://YOUR_USERNAME.github.io',
   base: '/personal_page',
   output: 'static',
+  integrations: [mdx()],
   vite: {
     plugins: [tailwindcss()],
   },

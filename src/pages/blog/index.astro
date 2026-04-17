@@ -3,41 +3,37 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { formatDate } from '../../utils/date';
 import { withBase } from '../../utils/urls';
+import { slugFromEntryId } from '../../utils/slug';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
-
-function slugFromId(id: string): string {
-  const file = id.replace(/\\/g, '/').split('/').pop() ?? id;
-  return file.replace(/\.md$/i, '');
-}
 ---
 
 <BaseLayout title="Blog" description="Writing by Jordan Lee.">
   <div class="space-y-12">
     <header class="space-y-2">
-      <h1 class="text-3xl font-semibold tracking-tight text-neutral-100 sm:text-4xl">Blog</h1>
-      <p class="text-neutral-500">Notes in reverse chronological order.</p>
+      <h1 class="text-3xl font-semibold tracking-tight text-heading sm:text-4xl">Blog</h1>
+      <p class="text-muted">Notes in reverse chronological order.</p>
     </header>
 
     <ul class="divide-y divide-white/10">
       {
         posts.map((post) => {
-          const slug = slugFromId(post.id);
+          const slug = slugFromEntryId(post.id);
           return (
             <li class="py-10 first:pt-0">
               <a href={withBase(`blog/${slug}`)} class="group block transition-colors duration-200">
                 <time
                   datetime={post.data.pubDate.toISOString()}
-                  class="text-xs uppercase tracking-widest text-neutral-600"
+                  class="text-xs uppercase tracking-widest text-muted/80"
                 >
                   {formatDate(post.data.pubDate)}
                 </time>
-                <h2 class="mt-2 text-lg font-medium text-neutral-100 group-hover:text-accent">
+                <h2 class="mt-2 text-lg font-medium text-highlight transition-colors group-hover:text-[#b2e6d2]">
                   {post.data.title}
                 </h2>
-                <p class="mt-2 text-sm text-neutral-500 group-hover:text-neutral-400">
+                <p class="mt-2 text-sm text-muted group-hover:text-muted/90">
                   {post.data.description}
                 </p>
               </a>

@@ -1,19 +1,15 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { formatDate } from '../../utils/date';
+import { slugFromEntryId } from '../../utils/slug';
 
 type BlogPost = CollectionEntry<'blog'>;
-
-function slugFromId(id: string): string {
-  const file = id.replace(/\\/g, '/').split('/').pop() ?? id;
-  return file.replace(/\.md$/i, '');
-}
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map((post) => ({
-    params: { slug: slugFromId(post.id) },
+    params: { slug: slugFromEntryId(post.id) },
     props: { post },
   }));
 }
@@ -23,7 +19,7 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
@@ -31,14 +27,14 @@ const { Content } = await post.render();
     <header class="space-y-3">
       <time
         datetime={post.data.pubDate.toISOString()}
-        class="text-xs uppercase tracking-widest text-neutral-600"
+        class="text-xs uppercase tracking-widest text-muted/80"
       >
         {formatDate(post.data.pubDate)}
       </time>
-      <h1 class="text-3xl font-semibold tracking-tight text-neutral-100 sm:text-4xl">
+      <h1 class="text-3xl font-semibold tracking-tight text-heading sm:text-4xl">
         {post.data.title}
       </h1>
-      <p class="text-neutral-500">{post.data.description}</p>
+      <p class="text-muted">{post.data.description}</p>
     </header>
     <div class="blog-post-body">
       <Content />
@@ -49,7 +45,7 @@ const { Content } = await post.render();
 <style is:global>
   .blog-post-body {
     margin-top: 2.5rem;
-    color: rgb(212 212 212);
+    color: var(--color-muted);
     font-size: 0.9375rem;
     line-height: 1.75;
   }
@@ -57,16 +53,16 @@ const { Content } = await post.render();
     margin-top: 1.25rem;
   }
   .blog-post-body :global(a) {
-    color: var(--color-accent);
+    color: var(--color-highlight);
     text-decoration: underline;
     text-underline-offset: 3px;
-    transition: color 200ms ease, opacity 200ms ease;
+    transition: filter 200ms ease, opacity 200ms ease;
   }
   .blog-post-body :global(a:hover) {
-    opacity: 0.9;
+    color: #b2e6d2;
   }
   .blog-post-body :global(strong) {
-    color: rgb(245 245 245);
+    color: var(--color-heading);
     font-weight: 600;
   }
 </style>
