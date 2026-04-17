@@ -1,67 +1,73 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { featured } from '../data/featured';
 import { withBase } from '../utils/urls';
 
 const bio =
-  'I build internal tools and data pipelines, mostly on cloud infra. I like small teams, readable code, and deploys that are easy to roll back. This site is a quiet index of what I have written and shipped.';
+  'I am an undergraduate student at the University of Victoria, in my last year studying Mathematics and Computer Science. During my time at the university I have developed my passion for intelligent systems, fascinated by works which use computation to expand, develop, or utilize some form of intelligence. On this website you will see some of the projects I have made over my years as a developer.';
+
+const hubLinks: {
+  label: string;
+  description: string;
+  href: string;
+}[] = [
+  {
+    label: 'Projects',
+    description: 'research, coursework, and builds with tags and outbound links',
+    href: withBase('projects'),
+  },
+  {
+    label: 'Writings',
+    description: 'longer notes and trip logs',
+    href: withBase('blog'),
+  },
+  {
+    label: 'Resume',
+    description: 'CV and experience at a glance',
+    href: withBase('resume'),
+  },
+  {
+    label: 'Contact',
+    description: 'email and collaborations',
+    href: 'mailto:graystontriston@gmail.com',
+  },
+];
 ---
 
 <BaseLayout
-  title="Jordan Lee"
-  description="Portfolio and writing by Jordan Lee — tools, data, and static sites."
+  title="Triston Grayston"
+  description="Undergraduate Mathematics and Computer Science at the University of Victoria — intelligent systems, reinforcement learning, and software."
+  showHeader={false}
 >
-  <div class="space-y-14 sm:space-y-16">
+  <div class="space-y-10 sm:space-y-14">
     <div class="space-y-6">
-      <h1 class="text-4xl font-semibold tracking-tight text-heading sm:text-5xl">
-        Jordan Lee
-      </h1>
+      <h1 class="text-4xl font-semibold tracking-tight text-heading sm:text-5xl">Triston Grayston</h1>
       <p class="max-w-prose leading-7 text-muted">
         {bio}
       </p>
     </div>
 
-    <section aria-label="Selected writing and projects" class="space-y-8">
+    <nav aria-label="Site sections">
       <ul class="space-y-8">
         {
-          featured.map((item) => (
-            <li class="leading-6">
-              {item.external ? (
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="group block transition-colors duration-200"
-                >
-                  <span class="font-medium text-highlight transition-colors group-hover:text-[#b2e6d2]">
-                    {item.title}
-                  </span>
-                  <span class="mt-1 block text-sm text-muted group-hover:text-muted/90">
-                    {item.description}
-                  </span>
-                </a>
-              ) : (
-                <a href={withBase(item.href)} class="group block transition-colors duration-200">
-                  <span class="font-medium text-highlight transition-colors group-hover:text-[#b2e6d2]">
-                    {item.title}
-                  </span>
-                  <span class="mt-1 block text-sm text-muted group-hover:text-muted/90">
-                    {item.description}
-                  </span>
-                </a>
-              )}
+          hubLinks.map((item) => (
+            <li class="leading-7">
+              <a href={item.href} class="group block transition-colors duration-200">
+                <span class="font-medium text-highlight transition-colors group-hover:text-[#b2e6d2]">
+                  {item.label}
+                </span>
+                <span class="text-muted group-hover:text-muted/90"> — {item.description}</span>
+              </a>
             </li>
           ))
         }
       </ul>
-    </section>
+    </nav>
 
     <footer class="border-t border-white/10 pt-10">
-      <p class="text-xs uppercase tracking-widest text-muted/80">Elsewhere</p>
-      <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
+      <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
         <li>
           <a
-            href="https://github.com/"
+            href="https://github.com/tristongrayston"
             class="transition-colors duration-200 hover:text-highlight"
             target="_blank"
             rel="noopener noreferrer"
@@ -71,7 +77,7 @@ const bio =
         </li>
         <li>
           <a
-            href="https://www.linkedin.com/in/"
+            href="https://www.linkedin.com/in/triston-grayston-9a3111224"
             class="transition-colors duration-200 hover:text-highlight"
             target="_blank"
             rel="noopener noreferrer"
@@ -80,8 +86,8 @@ const bio =
           </a>
         </li>
         <li>
-          <a href="mailto:hello@example.com" class="transition-colors duration-200 hover:text-highlight">
-            hello@example.com
+          <a href="mailto:graystontriston@gmail.com" class="transition-colors duration-200 hover:text-highlight">
+            Email
           </a>
         </li>
       </ul>

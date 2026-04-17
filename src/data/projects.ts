@@ -8,24 +8,38 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: 'Lakehouse metrics exporter',
+    title: 'Deep learning architectures as learned world models for RL',
     description:
-      'Batch pipeline that consolidates usage events and publishes rollups to Prometheus.',
-    tags: ['Python', 'AWS', 'DuckDB'],
-    href: 'https://github.com/example/lakehouse-metrics',
+      'CUCAI 2025: compared ResNet, RNN, and neural circuit policy world models from Lorenz to partially observable pendulum-style environments.',
+    tags: ['RL', 'CUCAI', 'PyTorch'],
+    href: 'https://github.com/tristongrayston/Expressive_World_Models',
   },
   {
-    title: 'Contract review assistant',
+    title: 'Mechanistic interpretability of reinforcement learning agents',
     description:
-      'Internal tool for clause extraction and diffing across contract revisions.',
-    tags: ['TypeScript', 'React', 'OpenAI API'],
-    href: 'https://github.com/example/contract-review',
+      'Directed studies (Summer 2024): goal misgeneralization, saliency and feature views, and interactive tools for layer activations — with Dr. George Tzanetakis.',
+    tags: ['RL', 'Interpretability', 'Arxiv'],
+    href: 'https://arxiv.org/abs/2411.00867',
   },
   {
-    title: 'Regional outage dashboard',
+    title: 'Introduction to reinforcement learning',
     description:
-      'Read-only status board fed by health checks and incident webhooks.',
-    tags: ['Go', 'Terraform', 'Cloudflare'],
-    href: 'https://github.com/example/outage-dashboard',
+      'Semi-formal UVicAI lecture series from Sutton & Barto with a tabular Q-learning workshop and live Colab builds.',
+    tags: ['Teaching', 'UVicAI', 'Colab'],
+    href: 'https://docs.google.com/presentation/d/1lChpUem0jhSQd796XzHGl_QQ0wpxQdLqUpvUOnUPRco/edit',
+  },
+  {
+    title: 'Translation between SDSS and MaNGA spectral data',
+    description:
+      'Proof-of-concept generative bridge (AE, VAE, VQ-VAE) on a large spectroscopic pipeline with collaborators in astrophysics.',
+    tags: ['Python', 'VAE', 'Astro'],
+    href: 'https://github.com/tristongrayston',
+  },
+  {
+    title: 'Simulating responsive action to wildfire spread',
+    description:
+      'CUCAI 2024 team project: dynamic fire spread with wind and moisture, PPO and heuristic agents for containment strategies.',
+    tags: ['RL', 'Simulation', 'CUCAI'],
+    href: 'https://github.com/tristongrayston',
   },
 ];

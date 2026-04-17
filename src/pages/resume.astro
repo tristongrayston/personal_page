@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../utils/urls';
+---
+
+<BaseLayout title="Resume" description="Resume — Triston Grayston.">
+  <div class="space-y-6">
+    <header class="space-y-2">
+      <h1 class="text-3xl font-semibold tracking-tight text-heading sm:text-4xl">Resume</h1>
+      <p class="text-muted">
+        A PDF version can live at the path below once you add <code class="text-highlight/90">public/resume.pdf</code> to
+        this repo.
+      </p>
+    </header>
+    <p>
+      <a
+        href={withBase('resume.pdf')}
+        class="text-highlight underline decoration-highlight/50 underline-offset-4 transition-colors hover:text-[#b2e6d2]"
+      >
+        Download resume.pdf
+      </a>
+      <span class="text-muted"> — link works after you add the file to <code class="text-muted">public/</code>.</span>
+    </p>
+  </div>
+</BaseLayout>
